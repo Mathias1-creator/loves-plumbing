@@ -74,7 +74,6 @@
   if (!lb || !triggers.length) return;
 
   var lbImg = lb.querySelector(".lb-img");
-  var lbCaption = lb.querySelector(".lb-caption");
   var lbCounter = lb.querySelector(".lb-counter");
   var btnPrev = lb.querySelector(".lb-prev");
   var btnNext = lb.querySelector(".lb-next");
@@ -90,8 +89,9 @@
     lbImg.src = t.getAttribute("data-lb-src") || img.currentSrc || img.src;
     lbImg.srcset = t.getAttribute("data-lb-srcset") || "";
     lbImg.sizes = "100vw";
+    // The description carries over as the image's alt attribute — it stays the
+    // enlarged photo's accessible name, it just is not rendered as visible text.
     lbImg.alt = img.getAttribute("alt") || "";
-    lbCaption.textContent = img.getAttribute("alt") || "";
     lbCounter.textContent = index + 1 + " / " + triggers.length;
   }
 

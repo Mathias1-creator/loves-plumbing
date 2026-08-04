@@ -7,10 +7,12 @@ name: Deploy to GitHub Pages
 # Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
 # This workflow then runs on every push and publishes the site.
 #
-# (`enablement: true` below asks GitHub to create the Pages site automatically,
-# but that call needs admin rights the workflow token does not have — it fails
-# with "Resource not accessible by integration". Once Pages is on, the same
-# call is a harmless no-op and the deploy succeeds.)
+# There is deliberately no `enablement: true` on configure-pages: creating a
+# Pages site needs `administration:write`, which the built-in GITHUB_TOKEN does
+# not carry (actions/configure-pages documents that it "requires a token other
+# than GITHUB_TOKEN"). Asking for it only produced a guaranteed
+# "Resource not accessible by integration" failure, so the switch above is the
+# real prerequisite.
 #
 # If you would rather not use Actions at all, pick Source: "Deploy from a
 # branch" instead, choose this branch and the / (root) folder, and delete this
@@ -35,16 +37,17 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    # Action majors below are the current Node 24 runtimes. The previous set
+    # (checkout@v4, configure-pages@v5, deploy-pages@v4) declared node20, which
+    # the runner force-upgraded to Node 24 and warned about on every run.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: "."
 
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

@@ -208,7 +208,6 @@ def lightbox():
 <button class="lb-close" type="button" aria-label="Close photo viewer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
 <button class="lb-prev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18 9 12l6-6"/></svg></button>
 <button class="lb-next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
-<p class="lb-caption"></p>
 <p class="lb-counter"></p>
 </div>
 """
@@ -537,7 +536,7 @@ def build_services():
 </section>""")
 
     return h + header(pfx, "services/") + f"""<main id="main">
-<section class="section section--dark" style="padding-bottom:0">
+<section class="section section--dark">
 <div class="wrap">
 <span class="eyebrow">Services</span>
 <h1>What we do, and how we do it.</h1>
@@ -561,30 +560,26 @@ def build_gallery():
         "filtration systems and finished bathrooms.",
         pfx, extra=schema())
 
-    lead = GALLERY[0]
-    lead_html = (f'<button class="gallery-lead reveal" type="button" {lb_attrs(lead, r)} '
-                 f'aria-label="Open photo: {esc(photos[lead]["alt"])}">'
-                 # sizes matches the 620px cap on .gallery-lead, so the browser
-                 # does not fetch a wider variant than it will ever display
-                 f'{picture(lead, "(min-width: 700px) 620px, 92vw", loading="eager", fetchpriority="high", r=r)}</button>')
-
+    # Every photo sits in the masonry on equal terms — no feature image — so the
+    # gallery reads as one consistent grid. The first tile is the LCP element,
+    # so it loads eagerly; everything after it stays lazy.
     items = "".join(
         f'<button class="masonry-item" type="button" {lb_attrs(sl, r)} '
         f'aria-label="Open photo: {esc(photos[sl]["alt"])}">'
-        f'{picture(sl, SIZES_MASONRY, r=r)}</button>' for sl in GALLERY[1:])
+        f'{picture(sl, SIZES_MASONRY, r=r, loading="eager" if i == 0 else "lazy", fetchpriority="high" if i == 0 else None)}</button>'
+        for i, sl in enumerate(GALLERY))
 
     return h + header(pfx, "gallery/") + f"""<main id="main">
 <section class="section section--dark" style="padding-bottom:clamp(2rem,4vw,3rem)">
 <div class="wrap">
 <span class="eyebrow">Gallery</span>
-<h1>{len(GALLERY)} jobs, start to finish.</h1>
+<h1>The work, photographed on site.</h1>
 <p class="lede" style="margin-top:1.5rem">Water heaters, sewer lines, repipes and finished fixtures — photographed on site. Select any photo to enlarge it.</p>
 </div>
 </section>
 
 <section class="section section--light" style="padding-top:clamp(2rem,4vw,3rem)" aria-label="Job photographs">
 <div class="wrap">
-{lead_html}
 <div class="masonry">{items}</div>
 </div>
 </section>
