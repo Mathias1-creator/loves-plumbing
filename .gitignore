@@ -1,0 +1,16 @@
+# Raw camera originals — NEVER commit these.
+#
+# The unprocessed iPhone photos still carry their original EXIF, and at least
+# one (IMG_9584) contains GPS coordinates recorded at a customer's home.
+# Publishing them in a public repository would expose that address even though
+# the processed images served by the site have been fully stripped.
+#
+# Keep them in the shared Drive folder (My Drive > Camilli Services >
+# Love's Plumbing) and pull them down locally when regenerating assets.
+assets/source/
+
+# Local noise
+.DS_Store
+Thumbs.db
+node_modules/
+*.log

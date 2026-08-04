@@ -1,0 +1,640 @@
+[
+ {
+  "slug": "water-heater-tankless-navien-pair-01",
+  "category": "water-heaters",
+  "alt": "Two white Navien tankless water heaters mounted side by side on a wall, connected with copper manifolds, isolation valves and yellow gas lines",
+  "width": 1284,
+  "height": 1683,
+  "variants": [
+   {
+    "w": 480,
+    "h": 629
+   },
+   {
+    "w": 960,
+    "h": 1258
+   },
+   {
+    "w": 1284,
+    "h": 1683
+   }
+  ],
+  "aspect": 0.7629
+ },
+ {
+  "slug": "water-heater-commercial-high-efficiency-02",
+  "category": "water-heaters",
+  "alt": "High-efficiency Bradford White commercial water heater with copper supply lines and a gas shutoff in a mechanical room",
+  "width": 1284,
+  "height": 2162,
+  "variants": [
+   {
+    "w": 480,
+    "h": 808
+   },
+   {
+    "w": 960,
+    "h": 1616
+   },
+   {
+    "w": 1284,
+    "h": 2162
+   }
+  ],
+  "aspect": 0.5939
+ },
+ {
+  "slug": "water-heater-commercial-bank-03",
+  "category": "water-heaters",
+  "alt": "Bank of commercial water heaters with insulated supply piping, expansion tank and stainless storage tank in a mechanical room",
+  "width": 1284,
+  "height": 1320,
+  "variants": [
+   {
+    "w": 480,
+    "h": 493
+   },
+   {
+    "w": 960,
+    "h": 987
+   },
+   {
+    "w": 1284,
+    "h": 1320
+   }
+  ],
+  "aspect": 0.9727
+ },
+ {
+  "slug": "water-heater-tank-replacement-04",
+  "category": "water-heaters",
+  "alt": "Newly installed residential tank water heater with expansion tank, copper connections and a gas shutoff valve",
+  "width": 1284,
+  "height": 1825,
+  "variants": [
+   {
+    "w": 480,
+    "h": 682
+   },
+   {
+    "w": 960,
+    "h": 1364
+   },
+   {
+    "w": 1284,
+    "h": 1825
+   }
+  ],
+  "aspect": 0.7036
+ },
+ {
+  "slug": "sewer-trench-caution-tape-01",
+  "category": "sewer-drain",
+  "alt": "Long open trench running along a driveway with a new black ABS sewer line and cleanout fitting, cordoned off with caution tape",
+  "width": 1284,
+  "height": 1664,
+  "variants": [
+   {
+    "w": 480,
+    "h": 622
+   },
+   {
+    "w": 960,
+    "h": 1244
+   },
+   {
+    "w": 1284,
+    "h": 1664
+   }
+  ],
+  "aspect": 0.7716
+ },
+ {
+  "slug": "sewer-cleanout-risers-02",
+  "category": "sewer-drain",
+  "alt": "Two white PVC cleanout risers set into an open trench, with sections of removed cast iron pipe stacked at the edge",
+  "width": 1284,
+  "height": 1680,
+  "variants": [
+   {
+    "w": 480,
+    "h": 628
+   },
+   {
+    "w": 960,
+    "h": 1256
+   },
+   {
+    "w": 1284,
+    "h": 1680
+   }
+  ],
+  "aspect": 0.7643
+ },
+ {
+  "slug": "sewer-cleanout-capped-03",
+  "category": "sewer-drain",
+  "alt": "Capped black ABS sewer cleanout riser installed on a new drain line in an excavated trench",
+  "width": 1284,
+  "height": 1646,
+  "variants": [
+   {
+    "w": 480,
+    "h": 615
+   },
+   {
+    "w": 960,
+    "h": 1231
+   },
+   {
+    "w": 1284,
+    "h": 1646
+   }
+  ],
+  "aspect": 0.7801
+ },
+ {
+  "slug": "sewer-cleanout-pair-04",
+  "category": "sewer-drain",
+  "alt": "Pair of black ABS cleanout risers joined to a newly installed sewer line at the bottom of an open trench",
+  "width": 1284,
+  "height": 928,
+  "variants": [
+   {
+    "w": 480,
+    "h": 347
+   },
+   {
+    "w": 960,
+    "h": 694
+   },
+   {
+    "w": 1284,
+    "h": 928
+   }
+  ],
+  "aspect": 1.3836
+ },
+ {
+  "slug": "sewer-trench-cleanout-05",
+  "category": "sewer-drain",
+  "alt": "New PVC sewer line and green-capped cleanout installed in a trench alongside a building foundation",
+  "width": 1284,
+  "height": 1611,
+  "variants": [
+   {
+    "w": 480,
+    "h": 602
+   },
+   {
+    "w": 960,
+    "h": 1204
+   },
+   {
+    "w": 1284,
+    "h": 1611
+   }
+  ],
+  "aspect": 0.797
+ },
+ {
+  "slug": "sewer-under-slab-tile-06",
+  "category": "sewer-drain",
+  "alt": "Under-slab drain replacement with new black ABS pipe and fittings run through an opened tile floor",
+  "width": 1284,
+  "height": 1671,
+  "variants": [
+   {
+    "w": 480,
+    "h": 625
+   },
+   {
+    "w": 960,
+    "h": 1249
+   },
+   {
+    "w": 1284,
+    "h": 1671
+   }
+  ],
+  "aspect": 0.7684
+ },
+ {
+  "slug": "sewer-trench-slab-night-07",
+  "category": "sewer-drain",
+  "alt": "New white PVC drain lines rising from a trench cut through a concrete slab, photographed at night",
+  "width": 1284,
+  "height": 1660,
+  "variants": [
+   {
+    "w": 480,
+    "h": 621
+   },
+   {
+    "w": 960,
+    "h": 1241
+   },
+   {
+    "w": 1284,
+    "h": 1660
+   }
+  ],
+  "aspect": 0.7735
+ },
+ {
+  "slug": "sewer-excavation-pvc-08",
+  "category": "sewer-drain",
+  "alt": "New white PVC sewer piping assembled at the bottom of a deep excavation",
+  "width": 1284,
+  "height": 1396,
+  "variants": [
+   {
+    "w": 480,
+    "h": 522
+   },
+   {
+    "w": 960,
+    "h": 1044
+   },
+   {
+    "w": 1284,
+    "h": 1396
+   }
+  ],
+  "aspect": 0.9198
+ },
+ {
+  "slug": "sewer-trench-abs-cleanout-night-09",
+  "category": "sewer-drain",
+  "alt": "Black ABS sewer line with a white cleanout riser installed in an open trench, photographed at night under work lights",
+  "width": 1600,
+  "height": 2133,
+  "variants": [
+   {
+    "w": 480,
+    "h": 640
+   },
+   {
+    "w": 960,
+    "h": 1280
+   },
+   {
+    "w": 1600,
+    "h": 2133
+   }
+  ],
+  "aspect": 0.75
+ },
+ {
+  "slug": "sewer-vault-service-10",
+  "category": "sewer-drain",
+  "alt": "Plumber working inside a below-grade concrete vault, installing new PVC piping above standing water",
+  "width": 1600,
+  "height": 2133,
+  "variants": [
+   {
+    "w": 480,
+    "h": 640
+   },
+   {
+    "w": 960,
+    "h": 1280
+   },
+   {
+    "w": 1600,
+    "h": 2133
+   }
+  ],
+  "aspect": 0.75
+ },
+ {
+  "slug": "sewer-line-excavation-11",
+  "category": "sewer-drain",
+  "alt": "Existing sewer line uncovered in a shallow trench alongside a building during a drain repair",
+  "width": 1284,
+  "height": 1571,
+  "variants": [
+   {
+    "w": 480,
+    "h": 587
+   },
+   {
+    "w": 960,
+    "h": 1175
+   },
+   {
+    "w": 1284,
+    "h": 1571
+   }
+  ],
+  "aspect": 0.8173
+ },
+ {
+  "slug": "drain-rough-in-wall-12",
+  "category": "sewer-drain",
+  "alt": "New PVC drain and vent rough-in inside an opened interior wall, with plastic sheeting hung for dust containment",
+  "width": 1284,
+  "height": 1662,
+  "variants": [
+   {
+    "w": 480,
+    "h": 621
+   },
+   {
+    "w": 960,
+    "h": 1243
+   },
+   {
+    "w": 1284,
+    "h": 1662
+   }
+  ],
+  "aspect": 0.7726
+ },
+ {
+  "slug": "repipe-pex-ceiling-01",
+  "category": "repipes",
+  "alt": "Red and blue PEX water lines running through open ceiling joists during a whole-house repipe",
+  "width": 1284,
+  "height": 1603,
+  "variants": [
+   {
+    "w": 480,
+    "h": 599
+   },
+   {
+    "w": 960,
+    "h": 1199
+   },
+   {
+    "w": 1284,
+    "h": 1603
+   }
+  ],
+  "aspect": 0.801
+ },
+ {
+  "slug": "repipe-copper-stucco-wall-02",
+  "category": "repipes",
+  "alt": "New copper water line running inside an opened stucco exterior wall during a repipe",
+  "width": 1600,
+  "height": 2133,
+  "variants": [
+   {
+    "w": 480,
+    "h": 640
+   },
+   {
+    "w": 960,
+    "h": 1280
+   },
+   {
+    "w": 1600,
+    "h": 2133
+   }
+  ],
+  "aspect": 0.75
+ },
+ {
+  "slug": "repipe-copper-crawlspace-03",
+  "category": "repipes",
+  "alt": "New copper supply manifold installed against a concrete foundation wall in a crawlspace",
+  "width": 1284,
+  "height": 1535,
+  "variants": [
+   {
+    "w": 480,
+    "h": 574
+   },
+   {
+    "w": 960,
+    "h": 1148
+   },
+   {
+    "w": 1284,
+    "h": 1535
+   }
+  ],
+  "aspect": 0.8365
+ },
+ {
+  "slug": "repipe-abs-pex-ceiling-04",
+  "category": "repipes",
+  "alt": "Black ABS drain lines and blue PEX water lines installed through open ceiling framing",
+  "width": 1284,
+  "height": 920,
+  "variants": [
+   {
+    "w": 480,
+    "h": 344
+   },
+   {
+    "w": 960,
+    "h": 688
+   },
+   {
+    "w": 1284,
+    "h": 920
+   }
+  ],
+  "aspect": 1.3957
+ },
+ {
+  "slug": "filtration-reverse-osmosis-undersink-01",
+  "category": "additional",
+  "alt": "Under-sink iSpring reverse osmosis drinking water system with storage tank and filter housings, labeled with a Love\u2019s Plumbing and Drains sticker",
+  "width": 1600,
+  "height": 2133,
+  "variants": [
+   {
+    "w": 480,
+    "h": 640
+   },
+   {
+    "w": 960,
+    "h": 1280
+   },
+   {
+    "w": 1600,
+    "h": 2133
+   }
+  ],
+  "aspect": 0.75
+ },
+ {
+  "slug": "filtration-whole-house-tank-02",
+  "category": "additional",
+  "alt": "Whole-house water filtration tank connected with copper piping and a bypass valve against a stucco exterior wall",
+  "width": 1284,
+  "height": 1636,
+  "variants": [
+   {
+    "w": 480,
+    "h": 612
+   },
+   {
+    "w": 960,
+    "h": 1223
+   },
+   {
+    "w": 1284,
+    "h": 1636
+   }
+  ],
+  "aspect": 0.7848
+ },
+ {
+  "slug": "gas-line-commercial-kitchen-03",
+  "category": "additional",
+  "alt": "Blue commercial gas connectors and shutoff valves running along a stainless steel commercial kitchen wall",
+  "width": 1284,
+  "height": 1643,
+  "variants": [
+   {
+    "w": 480,
+    "h": 614
+   },
+   {
+    "w": 960,
+    "h": 1228
+   },
+   {
+    "w": 1284,
+    "h": 1643
+   }
+  ],
+  "aspect": 0.7815
+ },
+ {
+  "slug": "water-shutoff-smart-valve-04",
+  "category": "additional",
+  "alt": "Smart automatic water shutoff and leak detection valve installed on a copper main water line",
+  "width": 1284,
+  "height": 1397,
+  "variants": [
+   {
+    "w": 480,
+    "h": 522
+   },
+   {
+    "w": 960,
+    "h": 1044
+   },
+   {
+    "w": 1284,
+    "h": 1397
+   }
+  ],
+  "aspect": 0.9191
+ },
+ {
+  "slug": "backflow-preventer-copper-05",
+  "category": "additional",
+  "alt": "Zurn backflow prevention assembly installed on copper risers at a property water service",
+  "width": 1284,
+  "height": 1516,
+  "variants": [
+   {
+    "w": 480,
+    "h": 567
+   },
+   {
+    "w": 960,
+    "h": 1133
+   },
+   {
+    "w": 1284,
+    "h": 1516
+   }
+  ],
+  "aspect": 0.847
+ },
+ {
+  "slug": "backflow-commercial-assembly-06",
+  "category": "additional",
+  "alt": "Large commercial backflow prevention assembly with red gate valves being set on a new water service line",
+  "width": 1284,
+  "height": 1656,
+  "variants": [
+   {
+    "w": 480,
+    "h": 619
+   },
+   {
+    "w": 960,
+    "h": 1238
+   },
+   {
+    "w": 1284,
+    "h": 1656
+   }
+  ],
+  "aspect": 0.7754
+ },
+ {
+  "slug": "bathroom-dark-tile-finished-01",
+  "category": "fixtures",
+  "alt": "Finished bathroom with dark textured wave tile, a black soaking tub, matte black shower fixtures and a lit recessed niche",
+  "width": 1086,
+  "height": 1448,
+  "variants": [
+   {
+    "w": 480,
+    "h": 640
+   },
+   {
+    "w": 960,
+    "h": 1280
+   },
+   {
+    "w": 1086,
+    "h": 1448
+   }
+  ],
+  "aspect": 0.75
+ },
+ {
+  "slug": "bathroom-tub-shower-tile-02",
+  "category": "fixtures",
+  "alt": "Finished tub and shower surround in grey textured wave tile with a black tub and handheld shower fixture",
+  "width": 1600,
+  "height": 2133,
+  "variants": [
+   {
+    "w": 480,
+    "h": 640
+   },
+   {
+    "w": 960,
+    "h": 1280
+   },
+   {
+    "w": 1600,
+    "h": 2133
+   }
+  ],
+  "aspect": 0.75
+ },
+ {
+  "slug": "shower-enclosure-installed-03",
+  "category": "fixtures",
+  "alt": "Newly installed white shower enclosure with sliding glass doors and a brushed nickel valve",
+  "width": 1600,
+  "height": 2133,
+  "variants": [
+   {
+    "w": 480,
+    "h": 640
+   },
+   {
+    "w": 960,
+    "h": 1280
+   },
+   {
+    "w": 1600,
+    "h": 2133
+   }
+  ],
+  "aspect": 0.75
+ }
+]

@@ -1,0 +1,777 @@
+/* ==========================================================================
+   Love's Plumbing and Drains
+   Strictly black, white and grey. No accent colour anywhere — the badge is
+   uncompromising and any colour would fight it. Emphasis comes from inverted
+   contrast and weight, never hue.
+   ========================================================================== */
+
+/* Self-hosted so no visitor IP is ever sent to a third-party font CDN.
+   One variable file covers the whole 300–800 range we set type in. */
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/inter-var.woff2") format("woff2-variations");
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --black: #000000;
+  --off-black: #0c0c0c;
+  --charcoal: #1a1a1a;
+  --grey: #767676;
+  --light-grey: #f4f4f4;
+  --white: #ffffff;
+
+  /* Derived greys for secondary copy. Still strictly greyscale, but pitched
+     for WCAG AA against their own backgrounds rather than sitting at the
+     4.5:1 knife-edge that --grey does. */
+  --muted-on-dark: #b0b0b0;
+  --muted-on-light: #5a5a5a;
+
+  --rule-on-dark: #2a2a2a;
+  --rule-on-light: #e0e0e0;
+
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --wrap: 1180px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --section-y: clamp(4rem, 9vw, 7.5rem);
+
+  --bar-h: 68px; /* sticky mobile call/text bar */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* --------------------------------------------------------------- reset -- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--black);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.25rem, 1.35rem + 4.4vw, 4.75rem); }
+h2 { font-size: clamp(1.85rem, 1.2rem + 2.9vw, 3.25rem); }
+h3 { font-size: clamp(1.2rem, 1.06rem + 0.62vw, 1.55rem); letter-spacing: -0.014em; }
+
+p { margin: 0 0 1.15em; }
+p:last-child { margin-bottom: 0; }
+
+/* ----------------------------------------------------------- skip link -- */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  padding: 0.85rem 1.25rem;
+  background: var(--white);
+  color: var(--black);
+  font-weight: 500;
+}
+.skip:focus { left: 0; }
+
+/* ------------------------------------------------------------- layout -- */
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--section-y); }
+
+/* The alternating black/white rhythm is the whole visual system — it comes
+   straight from the logo, so the page never needs decoration to feel designed. */
+.section--dark { background: var(--black); color: var(--white); }
+.section--offblack { background: var(--off-black); color: var(--white); }
+.section--light { background: var(--white); color: var(--black); }
+.section--grey { background: var(--light-grey); color: var(--black); }
+
+.section--dark a:not(.btn),
+.section--offblack a:not(.btn) { color: var(--white); }
+
+/* ------------------------------------------------------------ eyebrow -- */
+/* Small, uppercase, generously letterspaced — a quiet echo of the ring type
+   on the badge without literally copying it. */
+.eyebrow {
+  display: block;
+  margin: 0 0 1.15rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  line-height: 1.4;
+}
+.section--dark .eyebrow,
+.section--offblack .eyebrow { color: var(--muted-on-dark); }
+.section--light .eyebrow,
+.section--grey .eyebrow { color: var(--muted-on-light); }
+
+.lede {
+  font-size: clamp(1.05rem, 1rem + 0.4vw, 1.3rem);
+  line-height: 1.6;
+  max-width: 56ch;
+}
+.section--dark .lede,
+.section--offblack .lede { color: var(--muted-on-dark); }
+.section--light .lede,
+.section--grey .lede { color: var(--muted-on-light); }
+
+.section-head { max-width: 62ch; margin-bottom: clamp(2.25rem, 4vw, 3.5rem); }
+
+/* ------------------------------------------------------------ buttons -- */
+/* Inverted contrast rather than colour: white buttons on dark sections,
+   black buttons on light ones. Maximum contrast is what makes them pop. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.05rem 2rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-size: 0.94rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.22s var(--ease), color 0.22s var(--ease),
+              border-color 0.22s var(--ease), transform 0.22s var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn--light { background: var(--white); color: var(--black); border-color: var(--white); }
+.btn--light:hover { background: transparent; color: var(--white); }
+
+.btn--outline-light { background: transparent; color: var(--white); border-color: #4a4a4a; }
+.btn--outline-light:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+
+.btn--dark { background: var(--black); color: var(--white); border-color: var(--black); }
+.btn--dark:hover { background: transparent; color: var(--black); }
+
+.btn--outline-dark { background: transparent; color: var(--black); border-color: var(--rule-on-light); }
+.btn--outline-dark:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+
+/* Text link with a rule under it */
+.link-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 0.86rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid currentColor;
+  transition: gap 0.22s var(--ease), opacity 0.22s var(--ease);
+}
+.link-more:hover { gap: 0.85rem; opacity: 0.65; }
+
+/* ------------------------------------------------------------- header -- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: var(--black);
+  border-bottom: 1px solid var(--rule-on-dark);
+  color: var(--white);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 72px;
+  padding-block: 0.7rem;
+}
+/* The badge is circular — it gets clear space on all sides, never cramped. */
+.brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; padding: 0.25rem 0; }
+.brand img { width: 46px; height: 46px; }
+.brand-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  max-width: 11ch;
+}
+
+.nav { display: flex; align-items: center; gap: clamp(1.1rem, 2.2vw, 2.1rem); }
+.nav a {
+  font-size: 0.83rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted-on-dark);
+  padding: 0.4rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.nav a:hover { color: var(--white); border-bottom-color: var(--white); }
+.nav a[aria-current="page"] { color: var(--white); border-bottom-color: var(--white); }
+
+.header-cta { display: inline-flex; padding: 0.8rem 1.4rem; font-size: 0.82rem; }
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--rule-on-dark);
+  border-radius: 2px;
+  cursor: pointer;
+}
+.nav-toggle span {
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 1.5px;
+  background: var(--white);
+  transition: background 0.2s var(--ease);
+}
+.nav-toggle span::before,
+.nav-toggle span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 1.5px;
+  background: var(--white);
+  transition: transform 0.24s var(--ease);
+}
+.nav-toggle span::before { top: -6px; }
+.nav-toggle span::after { top: 6px; }
+.nav-toggle[aria-expanded="true"] span { background: transparent; }
+.nav-toggle[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span::after { transform: translateY(-6px) rotate(-45deg); }
+
+/* ---------------------------------------------------------------- hero -- */
+/* No photo, no overlay, no gradient. The badge is the hero. */
+.hero {
+  background: var(--black);
+  color: var(--white);
+  text-align: center;
+  padding-block: clamp(3.25rem, 8vw, 6.5rem) clamp(3.5rem, 8vw, 6rem);
+}
+.hero-badge {
+  width: clamp(168px, 27vw, 292px);
+  height: auto;
+  margin: 0 auto clamp(2.25rem, 4.5vw, 3.5rem);
+  /* Clear space ≥25% of the badge diameter on all sides. */
+  padding: 0;
+}
+.hero h1 { margin-bottom: 1.35rem; }
+.hero .lede { margin: 0 auto 2.5rem; color: var(--muted-on-dark); }
+.hero .btn-row { justify-content: center; }
+.hero-license {
+  margin-top: 2.25rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-on-dark);
+}
+
+/* --------------------------------------------------------- trust strip -- */
+.trust {
+  background: var(--white);
+  color: var(--black);
+  border-bottom: 1px solid var(--rule-on-light);
+  padding-block: 1.5rem;
+}
+/* The separator lives inside each <li>, so the ul gap and the li gap both sit
+   between two labels — keep them matched and modest or the six items overflow
+   the container and wrap awkwardly. */
+.trust ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem clamp(0.7rem, 1.5vw, 1.35rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.trust li {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.7rem, 1.5vw, 1.35rem);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.trust li:not(:last-child)::after {
+  content: "";
+  width: 1px;
+  height: 12px;
+  background: var(--rule-on-light);
+}
+
+/* --------------------------------------------------------- service grid -- */
+/* Four cards, so the column counts are explicit: auto-fit would drop to 3+1
+   at desktop widths and leave the fourth card stranded on its own row. */
+.svc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 2.6vw, 2.25rem);
+}
+@media (min-width: 600px)  { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .svc-grid { grid-template-columns: repeat(4, 1fr); } }
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: var(--white);
+  border: 1px solid var(--rule-on-light);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.section--dark .svc-card,
+.section--offblack .svc-card { background: var(--charcoal); border-color: var(--rule-on-dark); }
+.svc-card:hover { transform: translateY(-4px); border-color: var(--grey); }
+
+.svc-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--charcoal); }
+.svc-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+.svc-card:hover .svc-media img { transform: scale(1.035); }
+
+.svc-body { padding: 1.6rem 1.5rem 1.75rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+.svc-body h3 { margin: 0; }
+.svc-body p { font-size: 0.95rem; margin: 0; }
+.section--light .svc-body p, .section--grey .svc-body p { color: var(--muted-on-light); }
+.section--dark .svc-body p, .section--offblack .svc-body p { color: var(--muted-on-dark); }
+
+/* ----------------------------------------------- service detail blocks -- */
+.svc-detail { display: grid; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+@media (min-width: 860px) {
+  .svc-detail { grid-template-columns: 1fr 1fr; }
+  .svc-detail--flip .svc-detail-media { order: 2; }
+}
+.svc-detail-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+.svc-detail-body ul { margin: 1.4rem 0 0; padding: 0; list-style: none; }
+.svc-detail-body li {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--rule-on-light);
+  font-size: 0.95rem;
+}
+.section--dark .svc-detail-body li,
+.section--offblack .svc-detail-body li { border-top-color: var(--rule-on-dark); }
+.svc-detail-body li:last-child { border-bottom: 1px solid var(--rule-on-light); }
+.section--dark .svc-detail-body li:last-child,
+.section--offblack .svc-detail-body li:last-child { border-bottom-color: var(--rule-on-dark); }
+
+/* ------------------------------------------------------- selected work -- */
+/* Six photos -> a clean 3x2 on desktop, 2x3 on tablet. */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.75rem, 1.4vw, 1.1rem);
+}
+@media (min-width: 900px) { .work-grid { grid-template-columns: repeat(3, 1fr); } }
+.work-grid a {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--charcoal);
+}
+.work-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease), opacity 0.3s var(--ease); }
+.work-grid a:hover img { transform: scale(1.04); opacity: 0.88; }
+
+/* -------------------------------------------------------------- about -- */
+.about-split { display: grid; gap: clamp(2.25rem, 5vw, 4.5rem); align-items: start; }
+@media (min-width: 880px) { .about-split { grid-template-columns: 1.05fr 0.95fr; } }
+.about-copy p {
+  font-size: clamp(1.06rem, 1rem + 0.5vw, 1.32rem);
+  line-height: 1.62;
+  max-width: 46ch;
+}
+.about-copy p + p { margin-top: 1.35rem; }
+.about-copy .first {
+  font-weight: 500;
+  font-size: clamp(1.2rem, 1.05rem + 0.85vw, 1.6rem);
+  line-height: 1.45;
+}
+.about-sig {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-on-light);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-on-light);
+}
+.section--dark .about-sig, .section--offblack .about-sig {
+  border-top-color: var(--rule-on-dark);
+  color: var(--muted-on-dark);
+}
+
+/* ------------------------------------------------------------ gallery -- */
+/* Masonry via CSS columns: variable box heights, consistent gutters, and
+   images at their natural aspect ratio. Many of these are tall trench shots —
+   forcing them into a uniform grid would destroy them. */
+.masonry {
+  column-count: 1;
+  column-gap: clamp(0.75rem, 1.4vw, 1.1rem);
+}
+@media (min-width: 560px)  { .masonry { column-count: 2; } }
+@media (min-width: 900px)  { .masonry { column-count: 3; } }
+@media (min-width: 1240px) { .masonry { column-count: 4; } }
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: clamp(0.75rem, 1.4vw, 1.1rem);
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--charcoal);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: zoom-in;
+  position: relative;
+  line-height: 0;
+}
+.masonry-item img { width: 100%; height: auto; transition: opacity 0.3s var(--ease), transform 0.5s var(--ease); }
+.masonry-item:hover img { opacity: 0.85; transform: scale(1.02); }
+
+/* The lead is a tall portrait shot. Capping its width keeps it prominent
+   without letterboxing it against the container. */
+.gallery-lead {
+  display: block;
+  width: 100%;
+  max-width: min(100%, 620px);
+  margin: 0 auto clamp(1.75rem, 3.5vw, 3rem);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: zoom-in;
+  line-height: 0;
+}
+.gallery-lead img { width: 100%; height: auto; }
+
+/* ----------------------------------------------------------- lightbox -- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.965);
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+}
+.lightbox[open], .lightbox.is-open { display: flex; }
+.lightbox img {
+  max-width: 100%;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.lb-close, .lb-prev, .lb-next {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--rule-on-dark);
+  border-radius: 2px;
+  color: var(--white);
+  cursor: pointer;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.lb-close:hover, .lb-prev:hover, .lb-next:hover { background: var(--charcoal); border-color: var(--grey); }
+.lb-close { top: clamp(0.75rem, 2.5vw, 1.75rem); right: clamp(0.75rem, 2.5vw, 1.75rem); }
+.lb-prev { left: clamp(0.5rem, 2vw, 1.75rem); top: 50%; transform: translateY(-50%); }
+.lb-next { right: clamp(0.5rem, 2vw, 1.75rem); top: 50%; transform: translateY(-50%); }
+.lb-close svg, .lb-prev svg, .lb-next svg { width: 20px; height: 20px; }
+.lb-counter {
+  position: absolute;
+  bottom: clamp(0.75rem, 2.5vw, 1.75rem);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--muted-on-dark);
+}
+.lb-caption {
+  position: absolute;
+  bottom: clamp(3.1rem, 6vw, 4.25rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 62ch);
+  padding-inline: 1rem;
+  text-align: center;
+  font-size: 0.86rem;
+  color: var(--muted-on-dark);
+}
+
+/* ---------------------------------------------------------------- faq -- */
+.faq { max-width: 820px; margin-inline: auto; }
+.faq-item { border-top: 1px solid var(--rule-on-light); }
+.faq-item:last-child { border-bottom: 1px solid var(--rule-on-light); }
+.section--dark .faq-item, .section--offblack .faq-item { border-top-color: var(--rule-on-dark); }
+.section--dark .faq-item:last-child, .section--offblack .faq-item:last-child { border-bottom-color: var(--rule-on-dark); }
+
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1.5rem 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  font-size: clamp(1.02rem, 0.98rem + 0.35vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.35;
+  cursor: pointer;
+}
+.faq-icon { position: relative; flex: 0 0 18px; width: 18px; height: 18px; }
+.faq-icon::before, .faq-icon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: currentColor;
+  transition: transform 0.28s var(--ease), opacity 0.28s var(--ease);
+}
+.faq-icon::before { width: 18px; height: 1.5px; transform: translate(-50%, -50%); }
+.faq-icon::after  { width: 1.5px; height: 18px; transform: translate(-50%, -50%); }
+.faq-q[aria-expanded="true"] .faq-icon::after { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+
+/* Answers are open by default so the FAQ still reads with JS disabled;
+   the script collapses them on load by setting [hidden]. */
+.faq-a { display: block; padding: 0 0 1.6rem; max-width: 68ch; }
+.faq-a[hidden] { display: none; }
+.section--light .faq-a, .section--grey .faq-a { color: var(--muted-on-light); }
+.section--dark .faq-a, .section--offblack .faq-a { color: var(--muted-on-dark); }
+
+/* ------------------------------------------------------------ contact -- */
+.contact-grid { display: grid; gap: clamp(2rem, 4vw, 3.5rem); }
+@media (min-width: 820px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+.contact-big {
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 3.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+.contact-big:hover { opacity: 0.72; }
+
+.detail-list { margin: 0; padding: 0; }
+.detail-list div { padding: 1.15rem 0; border-top: 1px solid var(--rule-on-light); }
+.section--dark .detail-list div, .section--offblack .detail-list div { border-top-color: var(--rule-on-dark); }
+.detail-list div:last-child { border-bottom: 1px solid var(--rule-on-light); }
+.section--dark .detail-list div:last-child, .section--offblack .detail-list div:last-child { border-bottom-color: var(--rule-on-dark); }
+.detail-list dt {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.section--light .detail-list dt, .section--grey .detail-list dt { color: var(--muted-on-light); }
+.section--dark .detail-list dt, .section--offblack .detail-list dt { color: var(--muted-on-dark); }
+.detail-list dd { margin: 0; font-size: 1.02rem; }
+.detail-list dd a { text-decoration: none; border-bottom: 1px solid currentColor; }
+
+/* ----------------------------------------------------------- fine copy -- */
+.prose { max-width: 68ch; }
+.prose h2 { font-size: clamp(1.4rem, 1.2rem + 0.9vw, 1.9rem); margin-top: 2.75rem; margin-bottom: 0.9rem; }
+.prose h2:first-of-type { margin-top: 0; }
+.prose ul { padding-left: 1.15rem; margin: 0 0 1.15em; }
+.prose li { margin-bottom: 0.5rem; }
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* -------------------------------------------------------------- footer -- */
+.site-footer { background: var(--black); color: var(--white); padding-block: clamp(3.5rem, 7vw, 5.5rem) 2rem; }
+.footer-grid { display: grid; gap: clamp(2.25rem, 4vw, 3rem); }
+@media (min-width: 720px)  { .footer-grid { grid-template-columns: 1.3fr 1fr 1fr; } }
+
+.footer-brand img { width: 104px; height: 104px; margin-bottom: 1.25rem; }
+.footer-brand p { color: var(--muted-on-dark); font-size: 0.92rem; max-width: 34ch; }
+
+.footer-col h2 {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-on-dark);
+  margin-bottom: 1.1rem;
+}
+.footer-col ul { list-style: none; margin: 0; padding: 0; }
+.footer-col li { margin-bottom: 0.65rem; font-size: 0.94rem; }
+.footer-col a { text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s var(--ease); }
+.footer-col a:hover { border-bottom-color: var(--white); }
+.footer-col .muted { color: var(--muted-on-dark); }
+
+.ig-link { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+.ig-link svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--rule-on-dark);
+  font-size: 0.83rem;
+  color: var(--muted-on-dark);
+}
+.footer-bottom a { text-decoration: none; border-bottom: 1px solid transparent; }
+.footer-bottom a:hover { border-bottom-color: var(--muted-on-dark); }
+
+/* ------------------------------------------------- sticky mobile bar -- */
+/* The single most important element on the site. It never scrolls away. */
+.callbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: none;
+  border-top: 1px solid var(--rule-on-dark);
+  background: var(--black);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.callbar a {
+  flex: 1 1 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--bar-h);
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.callbar .call { background: var(--white); color: var(--black); }
+.callbar .text { background: var(--black); color: var(--white); }
+.callbar svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
+
+@media (max-width: 899px) {
+  .callbar { display: flex; }
+  body { padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom)); }
+}
+
+/* ------------------------------------------------------------ reveal -- */
+.reveal { opacity: 0; transform: translateY(22px); }
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+/* ------------------------------------------------------------- focus -- */
+:focus-visible {
+  outline: 3px solid var(--white);
+  outline-offset: 3px;
+}
+.section--light :focus-visible,
+.section--grey :focus-visible,
+.trust :focus-visible,
+body > main .section--light :focus-visible { outline-color: var(--black); }
+.masonry-item:focus-visible, .gallery-lead:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+.section--dark .masonry-item:focus-visible { outline-color: var(--white); }
+
+/* --------------------------------------------------------- responsive -- */
+@media (max-width: 899px) {
+  .nav-toggle { display: inline-flex; }
+  .header-cta { display: none; }
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem var(--gutter) 1.5rem;
+    background: var(--black);
+    border-bottom: 1px solid var(--rule-on-dark);
+    display: none;
+  }
+  .nav.is-open { display: flex; }
+  .nav a { padding: 0.95rem 0; border-bottom: 1px solid var(--rule-on-dark); }
+  .nav a:last-child { border-bottom: 0; }
+}
+
+@media (max-width: 420px) {
+  .btn { padding: 0.95rem 1.4rem; font-size: 0.86rem; }
+  .btn-row .btn { flex: 1 1 100%; }
+  .brand-name { display: none; }
+}
+
+/* ------------------------------------------------- reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .svc-card:hover { transform: none; }
+  .svc-card:hover .svc-media img,
+  .work-grid a:hover img,
+  .masonry-item:hover img { transform: none; }
+}
+
+/* ------------------------------------------------------------- print -- */
+@media print {
+  .site-header, .callbar, .lightbox { display: none !important; }
+  body { padding-bottom: 0; color: #000; background: #fff; }
+  .section--dark, .section--offblack, .hero, .site-footer { background: #fff !important; color: #000 !important; }
+}
