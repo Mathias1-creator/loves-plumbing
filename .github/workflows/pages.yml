@@ -1,0 +1,38 @@
+name: Deploy to GitHub Pages
+
+# The site is plain static files, so there is nothing to build — this just
+# publishes the repository contents. `enablement: true` turns the Pages site
+# on if it has not been enabled in repository settings yet.
+on:
+  push:
+    branches: ["claude/loves-plumbing-website-vyqcdj", "main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
