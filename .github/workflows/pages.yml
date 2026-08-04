@@ -1,8 +1,20 @@
 name: Deploy to GitHub Pages
 
 # The site is plain static files, so there is nothing to build — this just
-# publishes the repository contents. `enablement: true` turns the Pages site
-# on if it has not been enabled in repository settings yet.
+# publishes the repository contents.
+#
+# ONE-TIME SETUP REQUIRED: Pages has to be switched on by a repo admin first.
+# Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+# This workflow then runs on every push and publishes the site.
+#
+# (`enablement: true` below asks GitHub to create the Pages site automatically,
+# but that call needs admin rights the workflow token does not have — it fails
+# with "Resource not accessible by integration". Once Pages is on, the same
+# call is a harmless no-op and the deploy succeeds.)
+#
+# If you would rather not use Actions at all, pick Source: "Deploy from a
+# branch" instead, choose this branch and the / (root) folder, and delete this
+# workflow file — branch deployment serves the committed files directly.
 on:
   push:
     branches: ["claude/loves-plumbing-website-vyqcdj", "main"]

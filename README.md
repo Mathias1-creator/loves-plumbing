@@ -75,3 +75,24 @@ python3 scripts/audit.py
   through `build_images.py`, not be dropped into `assets/img/photos/` by hand.
 - The site makes **no claims about pricing, warranties, free estimates or
   financing**, because we do not have that information.
+
+## Deploying
+
+The site is committed ready-to-serve; there is nothing to build. Pages must be
+switched on once by a repository admin — the automation token is not permitted
+to create a Pages site (`Resource not accessible by integration`).
+
+**Settings → Pages → Build and deployment → Source:**
+
+- **"GitHub Actions"** — `.github/workflows/pages.yml` publishes on every push.
+- **"Deploy from a branch"** — pick this branch and the `/ (root)` folder, then
+  delete the workflow file.
+
+Either way the site lands at:
+
+```
+https://mathias1-creator.github.io/loves-plumbing/
+```
+
+If a custom domain is added later, update `BASE` in `scripts/build_site.py` and
+re-run it so the canonical, OpenGraph and sitemap URLs match.
