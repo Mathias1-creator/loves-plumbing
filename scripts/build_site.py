@@ -88,6 +88,27 @@ SMS_SVG = ('<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
            '<path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM7 9h10v2H7V9zm0 4h7v2H7v-2z"/></svg>')
 
 
+# Drawn rather than typed: Google's latin webfont subset has no U+2192, so a
+# text arrow would fall back to a system font and render inconsistently.
+ARROW_SVG = ('<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+             'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" '
+             'aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>')
+
+
+def brand_svg(name):
+    """Inline an official brand mark from assets/img.
+
+    Kept as real files so they stay auditable and swappable, but inlined into
+    the page so a visitor's browser makes no extra request for them. The marks
+    are used unmodified — Google's four-colour G and Yelp's red burst — which
+    is what both companies' brand guidelines require, and what makes them read
+    as genuine third-party badges rather than site decoration.
+    """
+    svg = open(f"assets/img/logo-{name}.svg").read().strip()
+    svg = svg.replace(' xmlns="http://www.w3.org/2000/svg"', "", 1)
+    return svg.replace("<svg", '<svg aria-hidden="true" focusable="false"', 1)
+
+
 def head(title, desc, path_prefix, og_type="website", extra=""):
     r = rel(path_prefix)
     url = f"{BASE}/{path_prefix}"
@@ -237,6 +258,7 @@ def schema(page_extra=None):
         "description": ("Owner-operated plumbing, sewer and drain contractor serving Riverside, "
                         "San Diego and Orange County. Water heaters, sewer and drain repair, "
                         "whole-house repipes. Licensed, bonded and insured, 24 hours a day."),
+        "slogan": "Taking care of you with LOVE & Doing every job with LOVE.",
         "founder": {"@type": "Person", "name": OWNER},
         "areaServed": [{"@type": "AdministrativeArea", "name": a} for a in AREAS],
         "openingHoursSpecification": [{
@@ -350,6 +372,45 @@ FAQ = [
      "Call or text " + TEL_DISPLAY + ", any time."),
 ]
 
+TAGLINE = "Taking care of you with LOVE &amp; Doing every job with LOVE."
+
+# Verbatim customer reviews. No aggregate rating, star count or review total
+# anywhere — those go stale the moment a new review lands, and there is no
+# Review/AggregateRating JSON-LD for the same reason.
+GOOGLE_URL = ("https://www.google.com/maps/place/Love's+Plumbing+And+Drains/@0,0,9z/"
+              "data=!4m18!1m9!3m8!1s0x2d89352209ad2d93:0xe2fe098130cb69d!"
+              "2sLove's+Plumbing+And+Drains!8m2!3d33.2770784!4d-117.2098025!9m1!1b1!"
+              "16s%2Fg%2F11yrfq4sx1!3m7!1s0x2d89352209ad2d93:0xe2fe098130cb69d!"
+              "8m2!3d33.2770784!4d-117.2098025!9m1!1b1!16s%2Fg%2F11yrfq4sx1"
+              "?entry=ttu&g_ep=EgoyMDI2MDgwMy4wIKXMDSoASAFQAw%3D%3D")
+# Deliberately the business page, not /writeareview/ — a visitor following
+# "Read More on Yelp" wants to read reviews, not be handed a submission form.
+YELP_URL = "https://www.yelp.com/biz/love-s-plumbing-and-drains-san-diego-2"
+
+REVIEWS_GOOGLE = [
+    ("Anthony and his partner did not just an amazing job — they recovered my house "
+     "from a very unprofessional fake plumber. He loves his profession, he knows what "
+     "he is doing.", "Svetlana"),
+    ("Immediate, fast service, very honest and reliable. Used him for ten years, always "
+     "available when I need him, usually an emergency. This guy is the best.", "Steven C."),
+    ("Anthony has continuously shown up for us at the drop of a hat, in the middle of the "
+     "night, and under many strange circumstances — we are a 24-hour facility.", "Rachel D."),
+    ("On time, good communication, very well priced and very clean. For me it was the "
+     "honesty and how thorough he is.", "El E."),
+]
+
+REVIEWS_YELP = [
+    ("He was the only person in the process who I genuinely felt cared that we were "
+     "displaced and wanted to get us home — we weren’t just a job to him.",
+     "Griff B., Encinitas"),
+    ("Reliable, honest, and they do a great job. They did it at half the cost — my other "
+     "plumber took a look and said I got a great deal.", "Sam C., Oceanside"),
+    ("This was the best plumbing company I ever used. Anthony was cordial, professional "
+     "and very competent.", "Matt S., Escondido"),
+    ("Shianne and Anthony helped me out the same day and did great work double strapping "
+     "the water heater for my client.", "Alexis C., Chula Vista"),
+]
+
 SELECTED = ["bathroom-dark-tile-finished-01", "water-heater-tankless-navien-pair-01",
             "sewer-trench-caution-tape-01", "repipe-pex-ceiling-01",
             "gas-line-commercial-kitchen-03", "sewer-vault-service-10"]
@@ -383,6 +444,37 @@ def cta_buttons(variant="light"):
             f'<a class="btn {a}" href="tel:{TEL_LINK}">Call {TEL_DISPLAY}</a>'
             f'<a class="btn {b}" href="sms:{TEL_LINK}">Text us</a>'
             f"</div>")
+
+
+def review_column(platform, mark, reviews):
+    items = "".join(
+        f"<figure class=\"review\"><blockquote><p>&ldquo;{esc(q)}&rdquo;</p></blockquote>"
+        f"<figcaption>{esc(who)}</figcaption></figure>"
+        for q, who in reviews)
+    return (f'<div class="reviews-col">'
+            f'<h3 class="reviews-source">{mark}<span>{platform}</span></h3>'
+            f'<div class="review-list">{items}</div>'
+            f"</div>")
+
+
+def reviews_section():
+    return f"""<section class="section section--dark" aria-labelledby="rev-h">
+<div class="wrap">
+<div class="section-head" style="text-align:center;margin-inline:auto">
+<span class="eyebrow">Reviews</span>
+<h2 id="rev-h">What customers say.</h2>
+</div>
+<div class="reviews-grid reveal">
+{review_column("Google", brand_svg("google"), REVIEWS_GOOGLE)}
+{review_column("Yelp", brand_svg("yelp"), REVIEWS_YELP)}
+</div>
+<div class="btn-row" style="justify-content:center;margin-top:clamp(2.5rem,5vw,3.5rem)">
+<a class="btn btn--light" href="{esc(GOOGLE_URL)}" target="_blank" rel="noopener noreferrer">Read More on Google</a>
+<a class="btn btn--outline-light" href="{esc(YELP_URL)}" target="_blank" rel="noopener noreferrer">Read More on Yelp</a>
+</div>
+</div>
+</section>
+"""
 
 
 def final_cta(r=""):
@@ -443,6 +535,7 @@ def build_index():
      sizes="(min-width: 900px) 292px, 27vw"
      width="600" height="600" alt="{esc(NAME)}" fetchpriority="high">
 <h1>Plumbing, sewer and drain repair in Riverside, San Diego and Orange County</h1>
+<p class="hero-tagline">{TAGLINE}</p>
 <p class="lede">Water heaters, sewer and drain lines, and whole-house repipes. Owner-operated, and available 24 hours a day when something gives out.</p>
 {cta_buttons('light')}
 <p class="hero-license">Licensed, Bonded &amp; Insured &middot; CSLB #{LICENSE}</p>
@@ -471,7 +564,7 @@ def build_index():
 <p class="lede" style="margin-top:1.25rem">Every photo on this site is work {OWNER} did himself.</p>
 </div>
 <div class="work-grid reveal">{work}</div>
-<p style="margin-top:2.5rem"><a class="link-more" href="{r}gallery/">See the full gallery <span aria-hidden="true">&rarr;</span></a></p>
+<p style="margin-top:2.5rem"><a class="link-more" href="{r}gallery/">See the full gallery {ARROW_SVG}</a></p>
 </div>
 </section>
 
@@ -482,12 +575,13 @@ def build_index():
 <h2 id="about-h" style="margin-bottom:1.5rem">Straight answers, and the work done right the first time.</h2>
 <p>{NAME} is owned and operated by {OWNER} — more than ten years in the trade, two years running his own shop.</p>
 <p>That means no upselling, and no disappearing halfway through a job. You deal with Anthony directly.</p>
-<p style="margin-top:2rem"><a class="link-more" href="{r}about/">More about Anthony <span aria-hidden="true">&rarr;</span></a></p>
+<p style="margin-top:2rem"><a class="link-more" href="{r}about/">More about Anthony {ARROW_SVG}</a></p>
 </div>
 <div class="reveal">{picture('repipe-copper-crawlspace-03', SIZES_HALF, r=r)}</div>
 </div>
 </section>
 
+{reviews_section()}
 <section class="section section--grey" aria-labelledby="faq-h">
 <div class="wrap">
 <div class="section-head" style="text-align:center;margin-inline:auto">

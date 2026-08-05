@@ -20,21 +20,42 @@ def warn(msg): warns.append(msg); print(f"  \033[33mWARN\033[0m  {msg}")
 html = {p: open(p, encoding="utf-8").read() for p in PAGES}
 allhtml = "\n".join(html.values())
 
+
+def visible_text(src):
+    """Rendered copy only — no tags, and therefore no attribute values.
+
+    Matters because inlined brand SVGs carry long paths of bezier coordinates
+    that look like phone numbers to a loose regex, and supplied third-party
+    URLs carry punctuation we do not control."""
+    src = re.sub(r"<script.*?</script>|<style.*?</style>", " ", src, flags=re.S)
+    src = re.sub(r"<[^>]+>", " ", src)
+    return re.sub(r"\s+", " ", src)
+
+
+alltext = "\n".join(visible_text(v) for v in html.values())
+# href/src values, for link-level checks
+all_urls = re.findall(r'(?:href|src)="([^"]+)"', allhtml)
+
 print("\n\033[1m1. Phone number consistency\033[0m")
 tels = set(re.findall(r'tel:([+\d]+)', allhtml))
 smss = set(re.findall(r'sms:([+\d]+)', allhtml))
 ok(f"tel: targets = {tels}") if tels == {"+19515959240"} else bad(f"unexpected tel targets: {tels}")
 ok(f"sms: targets = {smss}") if smss == {"+19515959240"} else bad(f"unexpected sms targets: {smss}")
-# any other phone-shaped string in visible copy?
-others = set(re.findall(r'\(?\b(?!951)\d{3}\)?[ .-]\d{3}[ .-]\d{4}\b', allhtml))
-ok("no other phone number appears anywhere") if not others else bad(f"other phone numbers: {others}")
-disp = set(re.findall(r'\(951\)\s*595-9240|951-595-9240', allhtml))
+# any other phone-shaped string in the rendered copy?
+others = set(re.findall(r'\(?\b(?!951)\d{3}\)?[ .-]\d{3}[ .-]\d{4}\b', alltext))
+ok("no other phone number appears in visible copy") if not others else bad(f"other phone numbers: {others}")
+disp = set(re.findall(r'\(951\)\s*595-9240|951-595-9240', alltext))
 ok(f"displayed formats: {disp}")
 
 print("\n\033[1m2. Business name\033[0m")
-straight = sum(v.count("Love's") for v in html.values())
-curly = sum(v.count("Love’s") for v in html.values())
-ok(f"typographic apostrophe used consistently ({curly} refs, 0 straight)") if straight == 0 else bad(f"{straight} straight-apostrophe refs")
+# Copy only. The supplied Google Maps URL spells the business with a straight
+# apostrophe; that is Google's canonical link and must not be rewritten.
+straight = alltext.count("Love's")
+curly = alltext.count("Love’s")
+url_straight = sum(u.count("Love's") for u in all_urls)
+ok(f"typographic apostrophe used consistently in copy ({curly} refs, 0 straight)") if straight == 0 else bad(f"{straight} straight-apostrophe refs in copy")
+if url_straight:
+    print(f"  \033[36mINFO\033[0m  {url_straight} straight apostrophe(s) inside the supplied Google Maps URL — left verbatim")
 badname = re.findall(r"Love’s Plumbing (?:And|AND) Drains|Love’s Plumbing and Drain\b", allhtml)
 ok('spelling is "Love’s Plumbing and Drains" everywhere') if not badname else bad(f"name variants: {set(badname)}")
 
@@ -55,7 +76,11 @@ print("\n\033[1m4. No street address published\033[0m")
 addr = re.findall(r'\b\d{2,6}\s+(?:[A-Z][a-z]+\s+){1,3}(?:St|Street|Ave|Avenue|Rd|Road|Blvd|Dr|Drive|Ln|Lane|Way|Ct|Court)\b', allhtml)
 ok("no street address pattern found") if not addr else bad(f"possible address: {addr}")
 ok("no streetAddress in JSON-LD") if '"streetAddress"' not in allhtml else bad("JSON-LD contains streetAddress")
-ok("no map embed") if "google.com/maps" not in allhtml and "<iframe" not in allhtml else bad("map/iframe present")
+# An embedded map is a subresource (<iframe>, or maps in a src=). An outbound
+# "Read More on Google" link is not an embed and loads nothing.
+embeds = re.findall(r"<iframe\b", allhtml)
+map_src = [u for u in re.findall(r'src="([^"]+)"', allhtml) if "google.com/maps" in u or "maps.google" in u]
+ok("no map embed (no iframe, no map subresource)") if not embeds and not map_src else bad(f"map/iframe embed present: {embeds[:2]}{map_src[:2]}")
 
 print("\n\033[1m5. No invented claims\033[0m")
 claims = {
@@ -71,9 +96,19 @@ ok("no pricing, warranty, free-estimate or financing claims") if not found else 
 
 print("\n\033[1m6. No external requests (privacy)\033[0m")
 ext = set(re.findall(r'(?:src|href)="(https?://[^"]+)"', allhtml))
-allowed_prefixes = ("https://www.instagram.com/", "https://mathias1-creator.github.io/")
+# Outbound links a visitor chooses to follow. None of these are fetched by the
+# page itself, so the "no third-party requests" claim on /privacy still holds.
+allowed_prefixes = ("https://www.instagram.com/", "https://mathias1-creator.github.io/",
+                    "https://www.google.com/maps/", "https://www.yelp.com/biz/")
 bad_ext = [u for u in ext if not u.startswith(allowed_prefixes)]
-ok("only same-origin assets + Instagram profile link") if not bad_ext else bad(f"external refs: {bad_ext}")
+ok("only same-origin assets + Instagram/Google/Yelp outbound links") if not bad_ext else bad(f"external refs: {bad_ext}")
+
+# Those outbound links must not become automatic requests
+auto = re.findall(r'<(?:img|script|link|iframe|source)[^>]+(?:src|href)="https?://(?!mathias1-creator)[^"]+"', allhtml)
+ok("no page-initiated third-party requests (logos are inlined SVG)") if not auto else bad(f"third-party subresource: {auto[:3]}")
+ok('review link-outs use rel="noopener noreferrer" and target="_blank"') if allhtml.count('rel="noopener noreferrer"') >= 3 else bad("missing rel on external links")
+ok("no aggregate rating / review-count markup") if not re.search(r'aggregateRating|ratingValue|reviewCount', allhtml) else bad("stale-able rating markup present")
+ok("Yelp link points at the business page, not the review form") if "/writeareview" not in allhtml else bad("links to Yelp review submission form")
 ok("no Google Fonts CDN reference") if "fonts.googleapis" not in allhtml and "fonts.gstatic" not in allhtml else bad("Google Fonts CDN referenced")
 # Inspect script elements only — the privacy page's prose says the words
 # "analytics" and "tracking pixels" precisely to state there are none.
