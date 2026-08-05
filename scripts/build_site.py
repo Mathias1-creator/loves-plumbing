@@ -470,7 +470,7 @@ def reviews_section():
 </div>
 <div class="btn-row" style="justify-content:center;margin-top:clamp(2.5rem,5vw,3.5rem)">
 <a class="btn btn--light" href="{esc(GOOGLE_URL)}" target="_blank" rel="noopener noreferrer">Read More on Google</a>
-<a class="btn btn--outline-light" href="{esc(YELP_URL)}" target="_blank" rel="noopener noreferrer">Read More on Yelp</a>
+<a class="btn btn--light" href="{esc(YELP_URL)}" target="_blank" rel="noopener noreferrer">Read More on Yelp</a>
 </div>
 </div>
 </section>
